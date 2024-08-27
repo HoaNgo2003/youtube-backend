@@ -6,7 +6,7 @@ import { VideoService } from './video.service';
  
  
 import { UpdateVideoDto } from './dto/update.dto';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { storageconfig } from 'src/helpers/config';
 import { extname } from 'path';
@@ -79,6 +79,12 @@ export class VideoController {
   }
   @Public()
   @Get()
+  @ApiQuery({
+    name: 'keyword',
+    type: String,
+    description: 'Search query',
+    required: false,  
+  })
   findAll(@Query('keyword') keyword:string):Promise<any>{
     return this.videoService.findAllVideo(keyword);
   }
